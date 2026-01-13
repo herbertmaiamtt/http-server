@@ -9,7 +9,7 @@ public class Json {
 
     private static ObjectMapper defaultObjectMapper(){
         ObjectMapper om = new ObjectMapper();
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // search why this matters
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         return om;
     }
@@ -19,7 +19,7 @@ public class Json {
     }
 
     public static <T> T fromJson(JsonNode node, Class<T> clazz) throws JsonProcessingException {
-        return myObjectMapper.treeToValue(node, clazz); // search why clazz
+        return myObjectMapper.treeToValue(node, clazz);
     }
 
     public static JsonNode toJson(Object obj){
