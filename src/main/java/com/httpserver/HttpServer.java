@@ -2,6 +2,7 @@ package com.httpserver;
 
 import com.httpserver.config.Configuration;
 import com.httpserver.config.ConfigurationManager;
+import com.httpserver.util.ServerListenerThread;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,35 +27,14 @@ public class HttpServer {
         System.out.println("Using port: " + conf.getPort());
         System.out.println("Using WebRoot: " + conf.getWebroot());
 
+        ServerListenerThread serverListenerThread = null;
         try {
-            ServerSocket serverSocket =  new ServerSocket(conf.getPort());
-            Socket socket = serverSocket.accept();
-
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
-
-            // TODO writing
-            String html = "<html><head><title>Simple Java HTTP Server</title></head><body><h1>This page was serve using a simple Java HTTP server</h1></body></html>";
-
-            // carriage return, line feed
-            final String CRLF = "\n\r"; // 13, 10
-
-            String response =
-                    "HTTP/1.1 200 OK" + CRLF + // Status line : HTTP VERSION RESPONSE_CODE RESPONSE_MESSAGE
-                    "Content-Length: " + html.getBytes().length + CRLF + // HEADER
-                            CRLF +
-                            html +
-                            CRLF + CRLF;
-
-            outputStream.write(response.getBytes());
-
-            inputStream.close();
-            outputStream.close();
-            socket.close();
-            serverSocket.close();
+            serverListenerThread = new ServerListenerThread(conf.getPort(), conf.getWebroot());
         } catch (IOException e) {
             throw new RuntimeException(e);
+            // TODO handle later
         }
+        serverListenerThread.start();
 
     }
 
