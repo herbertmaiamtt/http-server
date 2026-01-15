@@ -2,13 +2,12 @@ package com.httpserver;
 
 import com.httpserver.config.Configuration;
 import com.httpserver.config.ConfigurationManager;
-import com.httpserver.util.ServerListenerThread;
+import com.httpserver.core.ServerListenerThread;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /*
 *
@@ -17,15 +16,17 @@ import java.net.Socket;
 */
 public class HttpServer {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
+
     public static void main(String[] args){
 
-        System.out.println("Server starting");
+        LOGGER.info("Server starting...");
 
         ConfigurationManager.getInstance().loadConfigurationFile("src/main/resources/http.json");
         Configuration conf = ConfigurationManager.getInstance().getCurrentConfiguration();
 
-        System.out.println("Using port: " + conf.getPort());
-        System.out.println("Using WebRoot: " + conf.getWebroot());
+        LOGGER.info("Using port: " + conf.getPort());
+        LOGGER.info("Using WebRoot: " + conf.getWebroot());
 
         ServerListenerThread serverListenerThread = null;
         try {
