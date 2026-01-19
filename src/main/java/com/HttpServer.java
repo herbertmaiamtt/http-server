@@ -1,4 +1,4 @@
-package com.httpserver;
+package com;
 
 import com.httpserver.config.Configuration;
 import com.httpserver.config.ConfigurationManager;
