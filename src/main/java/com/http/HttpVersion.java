@@ -17,7 +17,7 @@ public enum HttpVersion {
         this.MINOR = MINOR;
     }
 
-    private static final Pattern httpVersionRegexPattern = Pattern.compile("^HTPP/(?<major>\\d+).(?<minor>\\d+)");
+    private static final Pattern httpVersionRegexPattern = Pattern.compile("^HTTP/(?<major>\\d+).(?<minor>\\d+)");
 
     public static HttpVersion getBestCompatibleVersion(String literalVersion) throws BadHttpVersionException {
         Matcher matcher = httpVersionRegexPattern.matcher(literalVersion);
