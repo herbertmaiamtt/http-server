@@ -125,7 +125,8 @@ public class HttpParser {
 
     private void processSingleHeaderField(StringBuilder processingDataBuffer, HttpRequest request) throws HttpParsingException {
         String rawHeaderField = processingDataBuffer.toString();
-        Pattern pattern = Pattern.compile("^(?<fieldName>[!#$%&’*+\\-./^_‘|˜\\dA-Za-z]+):\\s?(?<fieldValue>[!#$%&’*+\\-./^_‘|˜(),:;<=>?@[\\\\]{} \\dA-Za-z]+)\\s*$");
+        // Regex simplificado e aderente à RFC
+        Pattern pattern = Pattern.compile("^(?<fieldName>[A-Za-z0-9!#$%&'*+\\-.^_`|~]+):\\s*(?<fieldValue>.*?)\\s*$");
 
         Matcher matcher = pattern.matcher(rawHeaderField);
         if(matcher.matches()){
